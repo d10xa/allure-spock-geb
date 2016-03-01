@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "ru.d10xa"
-version = "0.2.0"
+version = "0.2.1"
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -18,7 +18,14 @@ repositories {
 
 dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.4.5'
-    compile 'org.gebish:geb-core:0.13.0'
+    compile 'org.gebish:geb-core:0.13.1'
+    compile 'org.gebish:geb-spock:0.13.1'
     compile 'org.spockframework:spock-core:1.0-groovy-2.4'
-    compile 'ru.yandex.qatools.allure:allure-java-adaptor-api:1.4.15'
+    compile 'ru.yandex.qatools.allure:allure-java-adaptor-api:1.4.22'
+    testCompile 'org.seleniumhq.selenium:selenium-htmlunit-driver:2.52.0'
+}
+
+test {
+    systemProperty "geb.build.reportsDir", file("$buildDir/geb")
+    systemProperty "allure.results.directory", file("$buildDir/allure-results")
 }
