@@ -7,11 +7,13 @@ import spock.lang.Stepwise
 public class GebSpec extends GebReportingSpec {
 
     def 'every step ends with report method execution'() {
+        println System.getProperty('gradleServerPort')
+        def string = "http://localhost:${System.getProperty('gradleServerPort')}/index.html"
+        println string
         when:
-        go 'http://www.gebish.org/'
-
+        go string
         then:
-        title == 'Geb - Very Groovy Browser Automation'
+        $("p").text() == 'hello'
     }
 
     def 'check results directory after first step'() {

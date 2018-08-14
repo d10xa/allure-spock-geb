@@ -4,8 +4,8 @@ plugins {
     id "com.jfrog.bintray" version "1.4"
 }
 
-group = "ru.d10xa"
-version = "0.2.1"
+group = 'ru.d10xa'
+version = '0.3.0-SNAPSHOT'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -23,9 +23,30 @@ dependencies {
     compile 'org.spockframework:spock-core:1.0-groovy-2.4'
     compile 'ru.yandex.qatools.allure:allure-java-adaptor-api:1.4.22'
     testCompile 'org.seleniumhq.selenium:selenium-htmlunit-driver:2.52.0'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: '2.53.1'
+
 }
+task serverStart << {
+    def serverFactory = new SimpleHttpFileServerFactory()
+    def server = serverFactory.start(file("$projectDir/site"), 0)
+    ext.server = server
+}
+
+task serverStop << {
+    serverStart.server.stop()
+}
+
+//serverStart.finalizedBy 'serverStop'
+test.dependsOn 'serverStart'
+test.finalizedBy 'serverStop'
 
 test {
     systemProperty "geb.build.reportsDir", file("$buildDir/geb")
     systemProperty "allure.results.directory", file("$buildDir/allure-results")
 }
+test {
+    doFirst {
+        systemProperty "gradleServerPort", serverStart.server.port
+    }
+}
+test.finalizedBy 'allureReport'
