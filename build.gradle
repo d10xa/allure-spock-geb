@@ -1,11 +1,11 @@
 plugins {
     id 'groovy'
     id 'maven-publish'
-    id "com.jfrog.bintray" version "1.4"
+    id "com.jfrog.bintray" version "1.8.4"
 }
 
 group = "ru.d10xa"
-version = "0.2.1"
+version = "0.3.0"
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -17,12 +17,14 @@ repositories {
 }
 
 dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.4.5'
-    compile 'org.gebish:geb-core:0.13.1'
-    compile 'org.gebish:geb-spock:0.13.1'
-    compile 'org.spockframework:spock-core:1.0-groovy-2.4'
-    compile 'ru.yandex.qatools.allure:allure-java-adaptor-api:1.4.22'
-    testCompile 'org.seleniumhq.selenium:selenium-htmlunit-driver:2.52.0'
+    compileOnly 'org.codehaus.groovy:groovy-all:2.5.2'
+    compileOnly 'org.gebish:geb-core:2.2'
+    compileOnly 'org.gebish:geb-spock:2.2'
+    compileOnly 'org.spockframework:spock-core:1.1-groovy-2.4'
+    compileOnly 'ru.yandex.qatools.allure:allure-java-adaptor-api:1.4.22'
+    compileOnly 'io.qameta.allure:allure-java-commons:2.7.0'
+    compileOnly "io.qameta.allure:allure-spock:2.7.0"
+    testCompile "org.seleniumhq.selenium:htmlunit-driver:2.32.1"
 }
 
 test {

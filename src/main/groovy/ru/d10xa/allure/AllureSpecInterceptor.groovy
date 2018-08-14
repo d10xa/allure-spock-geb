@@ -12,7 +12,12 @@ class AllureSpecInterceptor extends AbstractMethodInterceptor {
         def specInstance = invocation.instance
         if (specInstance instanceof GebSpec) {
             def browser = specInstance.browser as Browser
-            browser.config.reportingListener = new AllureReportingListener()
+            try {
+                Class.forName("io.qameta.allure.spock.AllureSpock")
+                browser.config.reportingListener = new Allure2ReportingListener()
+            } catch (ClassNotFoundException e){
+                browser.config.reportingListener = new AllureReportingListener()
+            }
         }
         invocation.proceed()
     }
